@@ -1,0 +1,44 @@
+body {
+	font-family: 'Raleway', sans-serif;
+	color: darkslategray;
+}
+
+.title {
+	color: navy;
+}
+
+.section__title {
+	padding-left: 0.5em;
+}
+
+.section__body {
+	padding-left: 2em;
+	padding-right: 1em;
+}
+
+.button-navi {
+	position: fixed;
+	padding: 1em;
+	height: 5em;
+	width: 5em;
+	border: none;
+	border-radius: 50%;
+	background-color: royalblue;
+	cursor: pointer;
+
+	color: white;
+}
+
+.button-navi:hover {
+	background-color: navy;
+}
+
+.button-navi_up {
+	bottom: 7em;
+	right: 1em;
+}	
+
+.button-navi_down {
+	bottom: 1em;
+	right: 1em;
+}	
