@@ -1,0 +1,27 @@
+{
+  "name": "plugin-jquery-sectionnavi",
+  "version": "1.0.0",
+  "description": "Custom jQuery Plugin for vertical page navigation",
+  "main": "app.js",
+  "dependencies": {
+    "eslint": "^4.19.0",
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/witflash/plugin-jquery-sectionnavi.git"
+  },
+  "author": "WitFlash",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/witflash/plugin-jquery-sectionnavi/issues"
+  },
+  "homepage": "https://github.com/witflash/plugin-jquery-sectionnavi#readme"
+}
