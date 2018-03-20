@@ -25,9 +25,9 @@
 
             for (let i = sectionTops.length - 1; i >= 0; i -= 1) {
                 let currentSection = sectionTops[i];
-                if (currentSection < currentTop) {
+                if (currentSection - options.offset < currentTop) {
                     $('html:not(:animated)').stop().animate({
-                        scrollTop: currentSection + options.offset
+                        scrollTop: currentSection - options.offset
                     }, options.speed);
                 }
             }
@@ -41,30 +41,31 @@
 
             for (let i = 0; i < sectionTops.length; i += 1) {
                 let currentSection = sectionTops[i];
-                if (currentSection > currentTop) {
+                if (currentSection - options.offset > currentTop) {
                     $('html:not(:animated)').stop().animate({
-                        scrollTop: currentSection + options.offset
+                        scrollTop: currentSection - options.offset
                     }, options.speed);
                 }
             }
         },
         
         getCurrentTop: function() {
-            let currentTop = Math.floor( $(window).scrollTop() );
+            let currentTop = Math.round( $(window).scrollTop() );
+            console.log('currentTop: ', currentTop);
             return currentTop;
         },
         
         getSectionTops: function() {
-            const offset = options.offset;
-            let sectionTops = [offset];
+            let sectionTops = [0];
             let sections = $(options.section);
-            let pageBottom = Math.floor( $('body').outerHeight() );
+            let pageBottom = Math.round( $('body').outerHeight() );
             
             sections.each( function(index) {
-                let value = Math.floor( $(this).offset().top );
-                sectionTops.push(value + offset);
+                let value = Math.round( $(this).offset().top );
+                sectionTops.push(value);
             })
             sectionTops.push(pageBottom);
+            console.log('sectionTops: ', sectionTops);
             return sectionTops;
         }
         

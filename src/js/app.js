@@ -5,6 +5,7 @@
         $('section').sectionnavi({
             buttonUp : '.js-navi-up',
             buttonDown : '.js-navi-down',
+            offset: 0
         })
     });
 
