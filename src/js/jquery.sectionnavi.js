@@ -8,12 +8,14 @@
     offset: 0,
     speed: 200,
     hideButtons: true,
-    speedHideBtn: 200,
+    speedHideBtn: 300,
+    ignoreFirst: true,
   };
 
   const statements = {
-    btnUpisHide: false,
-    btnDownisHide: false,
+    btnUpisHide: true,
+    btnDownisHide: true,
+    inAnimate: false,
   };
 
   const methods = {
@@ -29,6 +31,8 @@
       options = $.extend(options, userOptions);
       options.section = this;
 
+      methods.checkButtons();
+
       $(options.buttonUp).on('click', methods.navigationUp);
       $(options.buttonDown).on('click', methods.navigationDown);
       $(document).on('scroll', debounce(methods.checkButtons, 100));
@@ -43,14 +47,7 @@
       for (let i = sectionTops.length - 1; i >= 0; i -= 1) {
         const currentSection = sectionTops[i];
         if (currentSection - options.offset < currentTop) {
-          $('html:not(:animated)')
-            .stop()
-            .animate(
-              {
-                scrollTop: currentSection - options.offset,
-              },
-              options.speed,
-            );
+          methods.animateScroll(currentSection);
         }
       }
     },
@@ -64,14 +61,7 @@
       for (let i = 0; i < sectionTops.length; i += 1) {
         const currentSection = sectionTops[i];
         if (currentSection - options.offset > currentTop) {
-          $('html:not(:animated)')
-            .stop()
-            .animate(
-              {
-                scrollTop: currentSection - options.offset,
-              },
-              options.speed,
-            );
+          methods.animateScroll(currentSection);
         }
       }
     },
@@ -86,10 +76,12 @@
       const sections = options.section;
       const pageBottom = Math.round($('body').outerHeight());
 
-      sections.each(function () {
+      sections.each(function (index) {
+        if (options.ignoreFirst && index === 0) return;
         const value = Math.round($(this).offset().top);
         sectionTops.push(value);
       });
+
       sectionTops.push(pageBottom);
       return sectionTops;
     },
@@ -103,20 +95,36 @@
       const $btnDown = $(options.buttonDown);
 
       if (currentTop <= options.offset) {
-        $btnUp.hide(options.speedHideBtn);
+        $btnUp.fadeOut(options.speedHideBtn);
         statements.btnUpisHide = true;
       } else if (statements.btnUpisHide) {
-        $btnUp.show(options.speedHideBtn);
+        $btnUp.fadeIn(options.speedHideBtn);
       }
 
       if (currentTop >= bottom - $(window).innerHeight()) {
-        $btnDown.hide(options.speedHideBtn);
+        $btnDown.fadeOut(options.speedHideBtn);
         statements.btnDownisHide = true;
       } else if (statements.btnDownisHide) {
-        $btnDown.show(options.speedHideBtn);
+        $btnDown.fadeIn(options.speedHideBtn);
       }
 
       return true;
+    },
+
+    animateScroll(currentSection) {
+      if (statements.inAnimate) return;
+      statements.inAnimate = true;
+      $('html, body')
+        .stop()
+        .animate(
+          {
+            scrollTop: currentSection - options.offset,
+          },
+          options.speed,
+          () => {
+            statements.inAnimate = false;
+          },
+        );
     },
   };
 
