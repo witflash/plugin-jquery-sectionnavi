@@ -1,6 +1,6 @@
 {
   "name": "plugin-jquery-sectionnavi",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Custom jQuery Plugin for vertical page navigation",
   "main": "app.js",
   "dependencies": {
@@ -8,11 +8,14 @@
     "jquery": "^3.3.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.9.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
     "gulp-rename": "^1.2.2",
-    "gulp-uglifyjs": "^0.6.2"
+    "gulp-uglify": "^3.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

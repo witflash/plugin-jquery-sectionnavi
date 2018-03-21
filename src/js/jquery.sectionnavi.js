@@ -3,19 +3,35 @@
 (function () {
   const $ = jQuery;
   let options = {
-    section: 'section',
     buttonUp: 'buttonUp',
     buttonDown: 'buttonDown',
     offset: 0,
     speed: 200,
+    hideButtons: true,
+    speedHideBtn: 200,
+  };
+
+  const statements = {
+    btnUpisHide: false,
+    btnDownisHide: false,
   };
 
   const methods = {
     init(userOptions) {
+      const debounce = (func, delay) => {
+        let inDebounce;
+        return function (...args) {
+          clearTimeout(inDebounce);
+          inDebounce = setTimeout(() => func.apply(this, args), delay);
+        };
+      };
+
       options = $.extend(options, userOptions);
+      options.section = this;
 
       $(options.buttonUp).on('click', methods.navigationUp);
       $(options.buttonDown).on('click', methods.navigationDown);
+      $(document).on('scroll', debounce(methods.checkButtons, 100));
     },
 
     navigationUp(e) {
@@ -67,7 +83,7 @@
 
     getSectionTops() {
       const sectionTops = [0];
-      const sections = $(options.section);
+      const sections = options.section;
       const pageBottom = Math.round($('body').outerHeight());
 
       sections.each(function () {
@@ -76,6 +92,31 @@
       });
       sectionTops.push(pageBottom);
       return sectionTops;
+    },
+
+    checkButtons() {
+      if (!options.hideButtons) return false;
+
+      const currentTop = methods.getCurrentTop();
+      const bottom = $(document).outerHeight();
+      const $btnUp = $(options.buttonUp);
+      const $btnDown = $(options.buttonDown);
+
+      if (currentTop <= options.offset) {
+        $btnUp.hide(options.speedHideBtn);
+        statements.btnUpisHide = true;
+      } else if (statements.btnUpisHide) {
+        $btnUp.show(options.speedHideBtn);
+      }
+
+      if (currentTop >= bottom - $(window).innerHeight()) {
+        $btnDown.hide(options.speedHideBtn);
+        statements.btnDownisHide = true;
+      } else if (statements.btnDownisHide) {
+        $btnDown.show(options.speedHideBtn);
+      }
+
+      return true;
     },
   };
 
