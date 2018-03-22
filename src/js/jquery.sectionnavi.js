@@ -10,6 +10,7 @@
     hideButtons: true,
     speedHideBtn: 300,
     ignoreFirst: true,
+    useEmpty: false,
   };
 
   const statements = {
@@ -20,6 +21,10 @@
 
   const methods = {
     init(userOptions) {
+      if (this.length === 0 && !options.useEmpty) {
+        return this;
+      }
+
       const debounce = (func, delay) => {
         let inDebounce;
         return function (...args) {
@@ -36,6 +41,8 @@
       $(options.buttonUp).on('click', methods.navigationUp);
       $(options.buttonDown).on('click', methods.navigationDown);
       $(document).on('scroll', debounce(methods.checkButtons, 100));
+
+      return this;
     },
 
     navigationUp(e) {

@@ -17,6 +17,7 @@ body {
 }
 
 .button-navi {
+	display: none;
 	position: fixed;
 	padding: 1em;
 	height: 5em;
@@ -36,9 +37,9 @@ body {
 .button-navi_up {
 	bottom: 7em;
 	right: 1em;
-}	
+}
 
 .button-navi_down {
 	bottom: 1em;
 	right: 1em;
-}	
+}
