@@ -18,11 +18,10 @@ const gulp = require('gulp');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
-const copy = require('gulp-copy');
-
 
 /* TASKS */
-gulp.task('minimize', () => gulp.src(`${config.src.js}/*.js`)
+gulp.task('minimize', () => gulp
+  .src(`${config.src.js}/*.js`)
   .pipe(babel({ presets: ['env'] }))
   .pipe(uglify())
   .pipe(rename({ suffix: '.min' }))
@@ -30,4 +29,6 @@ gulp.task('minimize', () => gulp.src(`${config.src.js}/*.js`)
 
 gulp.task('docs', () => gulp
   .src(`${config.src.root}/**/*.*`)
-  .pipe(copy(config.docs.root)));
+  .pipe(gulp.dest(config.docs.root)));
+
+gulp.task('default', ['minimize', 'docs']);
